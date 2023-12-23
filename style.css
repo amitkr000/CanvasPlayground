@@ -1,0 +1,46 @@
+body {
+    margin: 0;
+    overflow: hidden; /* Ensure that the canvas won't cause scrollbars */
+}
+
+canvas {
+    display: block; /* Make sure the canvas is treated as a block element */
+}
+
+.shapes {
+    position: absolute;
+    top: 10vh; /* Adjust as needed */
+    left: 50vw; /* Adjust as needed */
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 2; /* Ensure the container is above the canvas */
+}
+
+.shape-button {
+    transition: background-color 0.3s ease;
+    display: inline-block; /* Updated property */
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+    vertical-align: middle;
+    padding: 10px;
+    margin-left: 20px;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 5px;
+    user-select: none;
+    background-color: #d8d8d8a2;
+}
+
+#triangle {
+    margin-right: 20px;
+}
+
+.active {
+    border-color: rgb(45, 153, 122);
+    background-color: rgb(61, 213, 170) !important;
+    color: #fff;
+}
