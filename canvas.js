@@ -30,8 +30,11 @@ let minRadius = 10;
 //store circles object
 let circleArray = [];
 let rectArray = [];
+let triangleArray = [];
 
 let activeButtonId = null;
+
+let reqframe;
 
 // Mouse input
 window.addEventListener("mousemove", function (event) {
@@ -47,6 +50,8 @@ window.addEventListener("resize", function () {
     generatecircle();
   } else if (activeButtonId == "rectangle") {
     generaterect();
+  } else if (activeButtonId == "triangle") {
+    generateTriangle();
   }
 });
 
@@ -56,7 +61,7 @@ function Rectangle(x, y, dx, dy, diagonal) {
   this.y = y;
   this.dx = dx;
   this.dy = dy;
-  this.theta = Math.random() * 0.52 + 0.26; //(0.26 - 0.78)radian
+  this.theta = Math.random() * 0.63 + 0.15; //(0.15 - 0.78)radian
   this.diagonal = diagonal;
   this.mindiagonal = diagonal;
   this.color = colorArray[Math.floor(Math.random() * colorArray.length)];
@@ -96,6 +101,30 @@ function Rectangle(x, y, dx, dy, diagonal) {
 
     this.draw();
   };
+}
+
+function generateRect() {
+  circleArray.length = 0;
+  rectArray.length = 0;
+  triangleArray.length = 0;
+  for (let i = 0; i < circles; i++) {
+    var property = Math.random() * 10 + 5;
+    let x = Math.random() * (innerWidth - property * 2) + property;
+    let y = Math.random() * (innerHeight - property * 2) + property;
+    let dx = (Math.random() - 0.5) * speed;
+    let dy = (Math.random() - 0.5) * speed;
+
+    rectArray.push(new Rectangle(x, y, dx, dy, property));
+  }
+}
+
+function animateRect() {
+  cancelAnimationFrame(reqframe);
+  reqframe = requestAnimationFrame(animateRect);
+  c.clearRect(0, 0, innerWidth, innerHeight);
+  for (let i = 0; i < rectArray.length; i++) {
+    rectArray[i].update();
+  }
 }
 
 //circle class
@@ -143,23 +172,10 @@ function Circle(x, y, dx, dy, radius) {
   };
 }
 
-function generaterect() {
+function generateCircle() {
   circleArray.length = 0;
   rectArray.length = 0;
-  for (let i = 0; i < circles; i++) {
-    var property = Math.random() * 10 + 5;
-    let x = Math.random() * (innerWidth - property * 2) + property;
-    let y = Math.random() * (innerHeight - property * 2) + property;
-    let dx = (Math.random() - 0.5) * speed;
-    let dy = (Math.random() - 0.5) * speed;
-
-    rectArray.push(new Rectangle(x, y, dx, dy, property));
-  }
-}
-
-function generatecircle() {
-  circleArray.length = 0;
-  rectArray.length = 0;
+  triangleArray.length = 0;
   console.log("generate");
   for (let i = 0; i < circles; i++) {
     var property = Math.random() * 5 + 1;
@@ -172,24 +188,92 @@ function generatecircle() {
   }
 }
 
-let reqframe;
-
-function animaterect() {
+function animateCircle() {
   cancelAnimationFrame(reqframe);
-  reqframe = requestAnimationFrame(animaterect);
-  c.clearRect(0, 0, innerWidth, innerHeight);
-  for (let i = 0; i < rectArray.length; i++) {
-    rectArray[i].update();
-  }
-}
-
-function animatecircle() {
-  cancelAnimationFrame(reqframe);
-  reqframe = requestAnimationFrame(animatecircle);
+  reqframe = requestAnimationFrame(animateCircle);
   console.log(reqframe);
   c.clearRect(0, 0, innerWidth, innerHeight);
   for (let i = 0; i < circleArray.length; i++) {
     circleArray[i].update();
+  }
+}
+
+//Triangle class
+function Triangle(x, y, dx, dy, diagonal) {
+  this.x = x;
+  this.y = y;
+  this.dx = dx;
+  this.dy = dy;
+  this.theta = Math.random() * 0.63 + 0.15; //(0.15 - 0.78)radian
+  this.diagonal = diagonal;
+  this.mindiagonal = diagonal;
+  this.color = colorArray[Math.floor(Math.random() * colorArray.length)];
+  this.third = Math.random();
+
+  this.draw = function () {
+    const width = this.diagonal * Math.cos(this.theta);
+    const height = this.diagonal * Math.sin(this.theta);
+    const a = [this.x - width / 2, this.y + height / 2];
+    const b = [this.x + width / 2, this.y + height / 2];
+    const d = [this.third * width + this.x - width / 2, this.y - height / 2];
+    c.beginPath();
+    c.moveTo(a[0], a[1]);
+    c.lineTo(b[0], b[1]);
+    c.lineTo(d[0], d[1]);
+    c.lineTo(a[0], a[1]);
+    c.fillStyle = this.color;
+    c.fill();
+  };
+
+  this.update = function () {
+    if (this.x + this.diagonal > innerWidth || this.x - this.diagonal < 0) {
+      this.dx = -this.dx;
+    }
+    if (this.y + this.diagonal > innerHeight || this.y - this.diagonal < 0) {
+      this.dy = -this.dy;
+    }
+    this.x += this.dx;
+    this.y += this.dy;
+
+    // interactivity
+    if (
+      mouse.x - this.x < 50 &&
+      mouse.x - this.x > -50 &&
+      mouse.y - this.y < 50 &&
+      mouse.y - this.y > -50
+    ) {
+      if (this.diagonal < maxRadius) {
+        this.diagonal += 4;
+      }
+    } else if (this.diagonal > this.mindiagonal) {
+      this.diagonal -= 1;
+    }
+
+    this.draw();
+  };
+}
+
+function generateTriangle() {
+  circleArray.length = 0;
+  rectArray.length = 0;
+  triangleArray.length = 0;
+  for (let i = 0; i < circles; i++) {
+    var property = Math.random() * 10 + 5;
+    let x = Math.random() * (innerWidth - property * 2) + property;
+    let y = Math.random() * (innerHeight - property * 2) + property;
+    let dx = (Math.random() - 0.5) * speed;
+    let dy = (Math.random() - 0.5) * speed;
+
+    triangleArray.push(new Triangle(x, y, dx, dy, property));
+  }
+}
+
+function animateTriangle() {
+  cancelAnimationFrame(reqframe);
+  reqframe = requestAnimationFrame(animateTriangle);
+  c.clearRect(0, 0, innerWidth, innerHeight);
+  for (let i = 0; i < triangleArray.length; i++) {
+    triangleArray[i].update();
   }
 }
 
@@ -200,11 +284,14 @@ function handleButtonClick(id) {
   activeButtonId = id;
   document.getElementById(id).classList.add("active");
   if (activeButtonId == "circle") {
-    console.log("circle");
-    generatecircle();
-    animatecircle();
+    generateCircle();
+    animateCircle();
   } else if (activeButtonId == "rectangle") {
-    generaterect();
-    animaterect();
+    generateRect();
+    animateRect();
+  } else if (activeButtonId == "triangle") {
+    console.log("circle");
+    generateTriangle();
+    animateTriangle();
   }
 }
