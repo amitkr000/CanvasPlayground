@@ -1,20 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Canvas Resize</title>
-    <link rel="stylesheet" href="style.css"> 
-    </style>
-  </head>
-  <body>
-    <canvas>
-    </canvas>
-    <div class="shapes">
-      <div id="circle" class="shape-button" onclick="handleButtonClick('circle')">Circle</div>
-      <div id="rectangle" class="shape-button" onclick="handleButtonClick('rectangle')">Rectangle</div>
-      <div id="triangle" class="shape-button" onclick="handleButtonClick('triangle')">Triangle</div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Playground</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="header">
+        <h1>CANVAS PLAYGROUND</h1>
     </div>
-    <script src="canvas.js"></script>
-  </body>
+
+    <div class="main">
+        <div class="card1">
+            <img src="img/1.png" alt="Avatar" style="width:100%">
+            <div class="container">
+                <h4><b>Random Shapes</b></h4> 
+                <div class="parent_container">
+                    <a class="play-button" href="pages/random_shapes.html"></a>
+                </div>
+                <p>Interact with the randomly generated shape of different sizes</p> 
+            </div>
+        </div>
+
+
+    </div>
+</body>
 </html>
