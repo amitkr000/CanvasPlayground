@@ -5,6 +5,23 @@ body {
 
 canvas {
     display: block; /* Make sure the canvas is treated as a block element */
+    z-index: -1;
+}
+
+.home{
+    position: absolute;
+    top: 6vh;
+    left: 5vw;
+    z-index: 3;
+}
+
+.home-icon {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.home a{
+    color: black;
 }
 
 .shapes {

@@ -3,19 +3,29 @@ body{
     background-color: #ffffff;
 }
 
-.header{
-    border: none;
-    background-color:#02474d;
-    box-shadow: 0 2px 10px 1px #10898d;
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #010715;
 }
 
-.header h1{
-    padding: 15px 0;
-    margin: 0%;
-    position: relative;
+.logo {
+    flex: 0 0 auto; /* Prevent the logo from growing */
+}
+
+.logo img{
+    width: 7vw;
+    height: 8vh;
+}
+
+.name {
+    flex: 1; /* Make the text take up remaining space */
     text-align: center;
     font-family: 'Teko', sans-serif;
-    color: aliceblue;
+    color: rgb(255, 255, 255);
+    font-size: 40px;
 }
 
 .main{
@@ -60,11 +70,12 @@ img {
 .play-button {
     border-style: solid;
     border-width: 2em 0 2em 4em;
-    border-color: transparent transparent transparent #000000;
+    border-color: transparent transparent transparent #eb243b;
     opacity: .75; 
     cursor: pointer;
 }
 
 .play-button:hover{
-    opacity: 1;
+    border-color: transparent transparent transparent #24eb95;
+    opacity: .75;
 }
