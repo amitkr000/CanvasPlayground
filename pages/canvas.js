@@ -23,7 +23,7 @@ let mouse = {
 };
 
 let circles = 300;
-let speed = 3;
+let speed = 2;
 let maxRadius = 80;
 let minRadius = 10;
 
